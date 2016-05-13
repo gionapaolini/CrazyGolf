@@ -36,7 +36,7 @@ public class MainGameLoop {
 
             renderer.prepare();
             shader.start();
-            renderer.render(model);
+            renderer.render(texturedModel);
             shader.stop();
             DisplayManager.updateDisplay();
 
