@@ -27,9 +27,18 @@ public class MainGameLoop {
                              0.5f, 0.5f, 0f};
         int[] indices = {0,1,3,3,1,2};
 
-        RawModel model = loader.loadToVAO(vertices, indices);
+        float[] textureCoords = {
+                0,0,
+                0,1,
+                1,1,
+                1,0};
+
+        RawModel model = loader.loadToVAO(vertices, textureCoords,indices);
+
         ModelTexture texture = new ModelTexture(loader.loadTexture("mud"));
         TexturedModel texturedModel = new TexturedModel(model, texture);
+
+
 
 
         while(!Display.isCloseRequested()){
