@@ -12,7 +12,7 @@ public class MainGameLoop {
         DisplayManager.createDisplay();
 
         while(!Display.isCloseRequested()){
-    
+
             DisplayManager.updateDisplay();
 
         }
