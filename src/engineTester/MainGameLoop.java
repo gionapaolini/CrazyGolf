@@ -1,11 +1,13 @@
 package engineTester;
 
+import models.TexturedModel;
 import org.lwjgl.opengl.Display;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import models.RawModel;
 import renderEngine.Renderer;
 import shaders.StaticShader;
+import textures.ModelTexture;
 
 /**
  * Created by giogio on 13/05/16.
