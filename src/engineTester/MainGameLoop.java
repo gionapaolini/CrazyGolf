@@ -8,6 +8,7 @@ import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import models.RawModel;
+import renderEngine.OBJLoader;
 import renderEngine.Renderer;
 import shaders.StaticShader;
 import textures.ModelTexture;
@@ -24,21 +25,9 @@ public class MainGameLoop {
         StaticShader shader = new StaticShader();
         Renderer renderer = new Renderer(shader);
 
-        float[] vertices = { -0.5f, 0.5f, 0f,
-                             -0.5f, -0.5f, 0f,
-                             0.5f, -0.5f, 0f,
-                             0.5f, 0.5f, 0f};
-        int[] indices = {0,1,3,3,1,2};
+        RawModel model = OBJLoader.loadObjModel("tree",loader);
 
-        float[] textureCoords = {
-                0,0,
-                0,1,
-                1,1,
-                1,0};
-
-        RawModel model = loader.loadToVAO(vertices, textureCoords,indices);
-
-        ModelTexture texture = new ModelTexture(loader.loadTexture("mud"));
+        ModelTexture texture = new ModelTexture(loader.loadTexture("tree"));
         TexturedModel texturedModel = new TexturedModel(model, texture);
 
 
