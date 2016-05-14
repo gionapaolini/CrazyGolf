@@ -17,17 +17,32 @@ public class Camera {
     public Camera(){}
 
     public void move(){
+
+        float nx = (float)(Math.sin(yaw));
+        float ny = (float)(Math.sin(pitch));
+        float nz = (float)(Math.cos(yaw));
+
+        float t = 0.2f;
+
         if(Keyboard.isKeyDown(Keyboard.KEY_W)){
-            position.z -= 0.02f;
+            position.x += nx*t;
+            position.y -= ny*t;
+            position.z -= nz*t;
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_S)){
-            position.z += 0.02f;
+            position.x -= nx*t;
+            position.y += ny*t;
+            position.z += nz*t;
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_D)){
-            position.x += 0.02f;
+            yaw+=1f;
+            if(yaw>360)
+                yaw = 0;
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_A)){
-            position.x -= 0.02f;
+            yaw-=1f;
+            if(yaw<0)
+                yaw = 360;
         }
 
 
