@@ -9,6 +9,7 @@ import org.lwjgl.util.vector.Vector3f;
 import renderEngine.*;
 import models.RawModel;
 import shaders.StaticShader;
+import terrains.Terrain;
 import textures.ModelTexture;
 
 import java.util.ArrayList;
@@ -33,15 +34,15 @@ public class MainGameLoop {
         List<Entity> trees = new ArrayList<Entity>();
         for(int i=0;i<100;i++){
 
-            float x = (r.nextFloat()*50)-25;
-            float y = (r.nextFloat()*20)-10;
-            float z = (r.nextFloat()*50)-25;
+            float x = (r.nextFloat()*200);
+            float y = (r.nextFloat()*20)-50;
+            float z = (r.nextFloat()*200);
             float rx = r.nextFloat()*180;
             float ry = r.nextFloat()*180;
             float rz = r.nextFloat()*180;
             float scale = r.nextFloat();
 
-            trees.add(new Entity(texturedModel, new Vector3f(x,y,z),rx,ry,rz,scale));
+            trees.add(new Entity(texturedModel, new Vector3f(x,0,z),0,0,0,scale));
 
         }
 
@@ -51,12 +52,15 @@ public class MainGameLoop {
 
         MasterRenderer renderer = new MasterRenderer();
 
+        Terrain terrain = new Terrain(0,0,200,200,loader,new ModelTexture(loader.loadTexture("grassy2")));
+
 
         while(!Display.isCloseRequested()){
             camera.move();
             for(Entity entity:trees){
                 renderer.processEntity(entity);
             }
+            renderer.processTerrain(terrain);
             renderer.render(light,camera);
             DisplayManager.updateDisplay();
 
