@@ -33,19 +33,20 @@ public class Control {
             widthMode = !widthMode;
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_ADD)){
-            if(widthMode && width<200) {
+            if(widthMode && width<50) {
                 width += 1;
-            }else if(height<200){
+            }else if(!widthMode && height<50){
                 height+=1;
             }
             terrain.changeSize(width,height,loader);
 
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_SUBTRACT)){
-            if(widthMode)
-                width-=1;
-            else
+            if(widthMode && width>1) {
+                width -= 1;
+            }else if(!widthMode && height>1){
                 height-=1;
+            }
             terrain.changeSize(width,height,loader);
         }
 
