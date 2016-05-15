@@ -23,8 +23,16 @@ public class Terrain {
         this.texture = texture;
         this.width = width;
         this.height = height;
-        this.x = gridX * width;
-        this.z = gridZ * height;
+        this.x = gridX;
+        this.z = gridZ;
+        model = generateTerrain(loader);
+    }
+
+    public void changeSize(float width, float height, Loader loader){
+        this.width = width;
+        this.height = height;
+        x = -width/2;
+        z = -height/2;
         model = generateTerrain(loader);
     }
 
