@@ -3,9 +3,12 @@ package courseCreator;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
+import guis.GuiRenderer;
+import guis.GuiTexture;
 import models.RawModel;
 import models.TexturedModel;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
@@ -36,16 +39,26 @@ public class CourseCreatorLoop {
 
         Control control = new Control(loader);
 
+        List<GuiTexture> guis = new ArrayList<GuiTexture>();
+        GuiTexture gui = new GuiTexture(loader.loadTexture("flower"), new Vector2f(0.5f,0.5f), new Vector2f(0.25f,0.25f));
+        guis.add(gui);
+        GuiTexture gui1 = new GuiTexture(loader.loadTexture("flower"), new Vector2f(0.3f,0.5f), new Vector2f(0.25f,0.25f));
+        guis.add(gui1);
+
+        GuiRenderer guiRenderer = new GuiRenderer(loader);
+
         while(!Display.isCloseRequested()){
             camera.move();
             control.changeSize();
             renderer.processTerrain(control.getTerrain());
             renderer.render(light,camera);
+            guiRenderer.render(guis);
             DisplayManager.updateDisplay();
 
         }
         renderer.cleanUp();
         loader.cleanUp();
+        guiRenderer.cleanUp();
         DisplayManager.closeDisplay();
 
     }
