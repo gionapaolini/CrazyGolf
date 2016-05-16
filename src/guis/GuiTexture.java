@@ -1,6 +1,7 @@
 package guis;
 
 import org.lwjgl.util.vector.Vector2f;
+import renderEngine.Loader;
 
 /**
  * Created by giogio on 15/05/16.
@@ -19,6 +20,10 @@ public class GuiTexture {
 
     public int getTexture() {
         return texture;
+    }
+
+    public void setTexture(int textureID){
+        texture = textureID;
     }
 
     public Vector2f getPosition() {

@@ -41,30 +41,24 @@ public class CourseCreatorLoop {
 
         Control control = new Control(loader);
 
-        List<GuiTexture> guis = new ArrayList<GuiTexture>();
-        GuiTexture gui = new GuiTexture(loader.loadTexture("flower"), new Vector2f(0.5f,0.5f), new Vector2f(0.25f,0.25f));
-        guis.add(gui);
-        GuiTexture gui1 = new GuiTexture(loader.loadTexture("flower"), new Vector2f(0.3f,0.5f), new Vector2f(0.25f,0.25f));
-        guis.add(gui1);
-
-        GuiRenderer guiRenderer = new GuiRenderer(loader);
+        GuiCourseCreator gui = new GuiCourseCreator(loader);
 
         MousePicker picker = new MousePicker(camera,renderer.getProjectionMatrix());
 
         while(!Display.isCloseRequested()){
             camera.move();
             picker.update();
-            System.out.println(picker.getCurrentRay());
+            //System.out.println(picker.getCurrentRay());
             control.changeSize();
             renderer.processTerrain(control.getTerrain());
             renderer.render(light,camera);
-            guiRenderer.render(guis);
+            gui.render();
             DisplayManager.updateDisplay();
 
         }
         renderer.cleanUp();
         loader.cleanUp();
-        guiRenderer.cleanUp();
+        gui.cleanUp();
         DisplayManager.closeDisplay();
 
     }
