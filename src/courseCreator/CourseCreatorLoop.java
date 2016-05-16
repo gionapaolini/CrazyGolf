@@ -16,6 +16,7 @@ import renderEngine.MasterRenderer;
 import renderEngine.OBJLoader;
 import terrains.Terrain;
 import textures.ModelTexture;
+import toolbox.MousePicker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class CourseCreatorLoop {
         Light light = new Light(new Vector3f(0,1000,0), new Vector3f(1,1,1));
 
         Camera camera = new Camera();
+        camera.setSQlimit(50);
 
         MasterRenderer renderer = new MasterRenderer();
 
@@ -47,8 +49,12 @@ public class CourseCreatorLoop {
 
         GuiRenderer guiRenderer = new GuiRenderer(loader);
 
+        MousePicker picker = new MousePicker(camera,renderer.getProjectionMatrix());
+
         while(!Display.isCloseRequested()){
             camera.move();
+            picker.update();
+            System.out.println(picker.getCurrentRay());
             control.changeSize();
             renderer.processTerrain(control.getTerrain());
             renderer.render(light,camera);

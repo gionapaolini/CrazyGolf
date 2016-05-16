@@ -14,21 +14,26 @@ public class Camera {
     private float pitch = 40;
     private float yaw;
     private float roll;
+    private float SQlimit = 1000;
 
     public Camera(){}
 
     public void move(){
         if(Keyboard.isKeyDown(Keyboard.KEY_W)){
-            position.z -= 0.2f;
+            if(position.z>-SQlimit)
+                position.z -= 0.2f;
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_S)){
-            position.z += 0.2f;
+            if(position.z<SQlimit)
+                position.z += 0.2f;
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_D)){
-            position.x += 0.2f;
+            if(position.x<SQlimit)
+                position.x += 0.2f;
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_A)){
-            position.x -= 0.2f;
+            if(position.x>-SQlimit)
+                position.x -= 0.2f;
         }
 
 
@@ -47,6 +52,10 @@ public class Camera {
 
 
 
+    }
+
+    public void setSQlimit(float sQlimit){
+        this.SQlimit = sQlimit/2;
     }
 
     public Vector3f getPosition() {

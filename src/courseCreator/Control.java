@@ -28,6 +28,10 @@ public class Control {
         return terrain;
     }
 
+    public void moveCamera(){
+
+    }
+
     public void changeSize(){
         if(Keyboard.isKeyDown(Keyboard.KEY_DIVIDE)){
             widthMode = !widthMode;
