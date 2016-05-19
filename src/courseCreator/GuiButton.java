@@ -33,8 +33,8 @@ public class GuiButton {
         BufferedImage bimg = null;
         try {
             bimg = ImageIO.read(new File("res/"+selected+".png"));
-            width = ((2f*bimg.getWidth())/ Display.getWidth())* scale;
-            height =((2f*bimg.getHeight())/ Display.getHeight())* scale;
+            width = (2f*(bimg.getWidth())/Display.getWidth() - 1)*scale;
+            height = (2f*(bimg.getHeight())/Display.getHeight()-1)*scale;
             bimg = null;
         } catch (IOException e) {
             e.printStackTrace();

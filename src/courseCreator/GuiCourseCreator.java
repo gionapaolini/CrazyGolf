@@ -28,7 +28,7 @@ public class GuiCourseCreator{
         button1 = new GuiButton("testButton","flower",loader,0,0,0.25f);
 
         guis.add(button1.getGuiTexture());
-        button1.select();
+        //button1.select();
         this.pick = pick;
         guiRenderer = new GuiRenderer(loader);
     }
@@ -42,23 +42,17 @@ public class GuiCourseCreator{
 
     public void checkClick(){
 
-        if(Mouse.isButtonDown(0)){
-            System.out.println(pick.getNormalCoord());
-        }
-        /*
-        Vector2f mouseC = pick.getNormalCoord();
 
-        if(mouseC.x>=((button1.getGuiTexture().getPosition().x)-(button1.getWidth())) &&
-           mouseC.x<=((button1.getGuiTexture().getPosition().x)+(button1.getWidth())) &&
-           mouseC.y>=((button1.getGuiTexture().getPosition().y)-(button1.getHeight())) &&
-           mouseC.y<=((button1.getGuiTexture().getPosition().y)+(button1.getHeight()))){
+            Vector2f mouseC = pick.getNormalCoord();
 
-            System.out.println("Inside!");
+            if(mouseC.x>=((button1.getGuiTexture().getPosition().x)-(button1.getWidth()/2))){
+                System.out.println("Inside!");
 
-        }else{
-            System.out.println("Not");
-        }
-        */
+            }else{
+                System.out.println("Not");
+            }
+
+
 
     }
 
