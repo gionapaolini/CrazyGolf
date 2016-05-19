@@ -22,6 +22,7 @@ public class GuiButton {
     private Vector2f scale;
     private float width;
     private float height;
+    boolean selected;
 
     public GuiButton(String selected, String notSelected, Loader loader, float x, float y, float scale){
         position = new Vector2f(x,y);
@@ -29,17 +30,17 @@ public class GuiButton {
         textureSelected = loader.loadTexture(selected);
         textureDeselected = loader.loadTexture(notSelected);
         currentText = new GuiTexture(textureDeselected,position,this.scale);
+        this.selected=false;
 
-        BufferedImage bimg = null;
-        try {
-            bimg = ImageIO.read(new File("res/"+selected+".png"));
-            width = (2f*(bimg.getWidth())/Display.getWidth() - 1)*scale;
-            height = (2f*(bimg.getHeight())/Display.getHeight()-1)*scale;
-            bimg = null;
-        } catch (IOException e) {
-            e.printStackTrace();
+    }
+
+    public void swap(){
+        selected = !selected;
+        if(selected){
+            select();
+        }else{
+            deselect();
         }
-
     }
 
     public float getHeight() {
@@ -52,9 +53,11 @@ public class GuiButton {
 
     public void select(){
         currentText.setTexture(textureSelected);
+        selected = true;
     }
     public void deselect(){
         currentText.setTexture(textureDeselected);
+        selected = false;
     }
     public GuiTexture getGuiTexture(){
         return currentText;

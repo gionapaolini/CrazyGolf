@@ -19,16 +19,18 @@ public class GuiCourseCreator{
     Loader loader;
     GuiRenderer guiRenderer;
     MousePicker pick;
-    GuiButton button1;
+    GuiButton ballButton, putholeButton;
+    long time = 0;
 
 
     public GuiCourseCreator(Loader loader, MousePicker pick){
         this.loader = loader;
         guis = new ArrayList<GuiTexture>();
-        button1 = new GuiButton("testButton","flower",loader,0,0,0.25f);
+        ballButton = new GuiButton("ballButton_on","ballButton_off",loader,-0.5f,0.85f,0.15f);
+        putholeButton = new GuiButton("putholeButton_on","putholeButton_off",loader,0.5f,0.85f,0.15f);
 
-        guis.add(button1.getGuiTexture());
-        //button1.select();
+        guis.add(ballButton.getGuiTexture());
+        guis.add(putholeButton.getGuiTexture());
         this.pick = pick;
         guiRenderer = new GuiRenderer(loader);
     }
@@ -42,16 +44,26 @@ public class GuiCourseCreator{
 
     public void checkClick(){
 
+            long current_time = System.currentTimeMillis();
 
-            Vector2f mouseC = pick.getNormalCoord();
+            if((current_time - time)>250) {
 
-            if(mouseC.x>=((button1.getGuiTexture().getPosition().x)-(button1.getWidth()/2))){
-                System.out.println("Inside!");
+                if (Mouse.isButtonDown(0)) {
 
-            }else{
-                System.out.println("Not");
+                    Vector2f mouseC = pick.getNormalCoord();
+                    if ((mouseC.x >= -0.648) && (mouseC.y <= 0.897) && (mouseC.x <= -0.35) && (mouseC.y >= 0.783)) {
+                        ballButton.swap();
+                        putholeButton.deselect();
+                    }else if ((mouseC.x >= (1-0.648)) && (mouseC.y <= 0.897) && (mouseC.x <= (1-0.35)) && (mouseC.y >= 0.783)) {
+                        putholeButton.swap();
+                        ballButton.deselect();
+                    }else {
+                        System.out.println(mouseC);
+                    }
+                    time = System.currentTimeMillis();
+
+                }
             }
-
 
 
     }

@@ -15,6 +15,7 @@ public class Control {
     private float width;
     private float height;
     private boolean widthMode;
+    long time = 0;
 
     public Control(Loader loader){
         widthMode = true;
@@ -33,8 +34,15 @@ public class Control {
     }
 
     public void changeSize(){
-        if(Keyboard.isKeyDown(Keyboard.KEY_DIVIDE)){
-            widthMode = !widthMode;
+        long current_time = System.currentTimeMillis();
+
+        if((current_time - time)>250) {
+            if (Keyboard.isKeyDown(Keyboard.KEY_DIVIDE)) {
+                widthMode = !widthMode;
+                time = System.currentTimeMillis();
+            }
+
+
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_ADD)){
             if(widthMode && width<50) {
