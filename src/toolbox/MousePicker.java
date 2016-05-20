@@ -14,6 +14,8 @@ import org.lwjgl.util.vector.Vector4f;
 public class MousePicker {
 
     private Vector3f currentRay;
+    private Vector3f currentTerrainPoint;
+
 
     private Matrix4f projectionMatrix;
     private Matrix4f viewMatrix;
@@ -72,5 +74,8 @@ public class MousePicker {
         float mouseY = Mouse.getY();
         return getNormalizeDeviceCoords(mouseX,mouseY);
     }
+
+
+
 
 }

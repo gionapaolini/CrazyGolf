@@ -54,6 +54,7 @@ public class GuiCourseCreator{
                     if ((mouseC.x >= -0.648) && (mouseC.y <= 0.897) && (mouseC.x <= -0.35) && (mouseC.y >= 0.783)) {
                         ballButton.swap();
                         putholeButton.deselect();
+
                     }else if ((mouseC.x >= (1-0.648)) && (mouseC.y <= 0.897) && (mouseC.x <= (1-0.35)) && (mouseC.y >= 0.783)) {
                         putholeButton.swap();
                         ballButton.deselect();

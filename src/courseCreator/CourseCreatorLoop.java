@@ -7,6 +7,7 @@ import guis.GuiRenderer;
 import guis.GuiTexture;
 import models.RawModel;
 import models.TexturedModel;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
@@ -34,16 +35,19 @@ public class CourseCreatorLoop {
 
         Light light = new Light(new Vector3f(0,1000,0), new Vector3f(1,1,1));
 
+        RawModel model = OBJLoader.loadObjModel("tree",loader);
+        ModelTexture texture = new ModelTexture(loader.loadTexture("tree"));
+        TexturedModel texturedModel = new TexturedModel(model, texture);
+
+        Entity tree = new Entity(texturedModel, new Vector3f(0,0,0),0,0,0,1);
+
         Camera camera = new Camera();
         camera.setSQlimit(50);
 
         MasterRenderer renderer = new MasterRenderer();
 
-        Control control = new Control(loader);
-
-
         MousePicker picker = new MousePicker(camera,renderer.getProjectionMatrix());
-
+        Control control = new Control(loader, picker);
         GuiCourseCreator gui = new GuiCourseCreator(loader,picker);
 
 
@@ -51,8 +55,14 @@ public class CourseCreatorLoop {
             camera.move();
             picker.update();
             gui.checkClick();
+            checkSpace(tree);
             //System.out.println(picker.getCurrentRay());
             control.changeSize();
+            control.setCurrentObj(tree);
+            tree.setMoving(true);
+            control.moveObject();
+
+            renderer.processEntity(tree);
             renderer.processTerrain(control.getTerrain());
             renderer.render(light,camera);
             gui.render();
@@ -64,5 +74,10 @@ public class CourseCreatorLoop {
         gui.cleanUp();
         DisplayManager.closeDisplay();
 
+    }
+    public static void checkSpace(Entity tree){
+        if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)){
+            tree.setState(!tree.render);
+        }
     }
 }

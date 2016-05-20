@@ -1,9 +1,12 @@
 package courseCreator;
 
+import entities.Entity;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.util.vector.Vector3f;
 import renderEngine.Loader;
 import terrains.Terrain;
 import textures.ModelTexture;
+import toolbox.MousePicker;
 
 /**
  * Created by giogio on 15/05/16.
@@ -15,14 +18,17 @@ public class Control {
     private float width;
     private float height;
     private boolean widthMode;
+    Entity currentObj;
     long time = 0;
+    MousePicker picker;
 
-    public Control(Loader loader){
+    public Control(Loader loader, MousePicker picker){
         widthMode = true;
         this.loader = loader;
         width = 20;
         height = 20;
         terrain = new Terrain(-10,-10,width,height,loader,new ModelTexture(loader.loadTexture("grassy2")));
+        this.picker = picker;
     }
 
     public Terrain getTerrain(){
@@ -63,6 +69,16 @@ public class Control {
         }
 
 
+    }
+
+    public void setCurrentObj(Entity obj){
+        currentObj = obj;
+    }
+
+    public void moveObject(){
+        if(currentObj.moving){
+            currentObj.setPosition(new Vector3f(picker.getCurrentRay().x,0,picker.getCurrentRay().z));
+        }
     }
 
 }
