@@ -111,8 +111,6 @@ public class MousePicker {
         float middlePoint = start + ((finish-start)/2f);
         if(count>=RECURSION_COUNT){
             Vector3f endPoint = getPointOnRay(ray,middlePoint);
-            System.out.println(endPoint.x);
-            System.out.println(terrain.getX());
             if(endPoint.x<terrain.getX() || endPoint.x>terrain.getX()+terrain.width ||
                     endPoint.z < terrain.getZ() || endPoint.z > terrain.getZ()+terrain.height){
                 return null;
