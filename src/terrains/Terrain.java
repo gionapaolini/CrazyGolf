@@ -10,8 +10,8 @@ import textures.ModelTexture;
  */
 public class Terrain {
 
-    private float width = 400;
-    private float height = 400;
+    public float width = 400;
+    public float height = 400;
     private static final int VERTEX_COUNT = 128;
 
     private float x;

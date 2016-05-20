@@ -46,14 +46,13 @@ public class CourseCreatorLoop {
 
         MasterRenderer renderer = new MasterRenderer();
 
-        MousePicker picker = new MousePicker(camera,renderer.getProjectionMatrix());
-        Control control = new Control(loader, picker);
-        GuiCourseCreator gui = new GuiCourseCreator(loader,picker);
+        Control control = new Control(loader, camera,renderer.getProjectionMatrix());
+        GuiCourseCreator gui = new GuiCourseCreator(loader,control.picker);
 
 
         while(!Display.isCloseRequested()){
             camera.move();
-            picker.update();
+            control.picker.update();
             gui.checkClick();
             checkSpace(tree);
             //System.out.println(picker.getCurrentRay());

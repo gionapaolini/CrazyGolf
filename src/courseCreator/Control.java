@@ -1,7 +1,9 @@
 package courseCreator;
 
+import entities.Camera;
 import entities.Entity;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.Loader;
 import terrains.Terrain;
@@ -22,13 +24,13 @@ public class Control {
     long time = 0;
     MousePicker picker;
 
-    public Control(Loader loader, MousePicker picker){
+    public Control(Loader loader, Camera cam, Matrix4f projectionMatrix){
         widthMode = true;
         this.loader = loader;
         width = 20;
         height = 20;
         terrain = new Terrain(-10,-10,width,height,loader,new ModelTexture(loader.loadTexture("grassy2")));
-        this.picker = picker;
+        picker = new MousePicker(cam,projectionMatrix,terrain);
     }
 
     public Terrain getTerrain(){
@@ -76,8 +78,8 @@ public class Control {
     }
 
     public void moveObject(){
-        if(currentObj.moving){
-            currentObj.setPosition(new Vector3f(picker.getCurrentRay().x,0,picker.getCurrentRay().z));
+        if(currentObj.moving && picker.getCurrentTerrainPoint()!=null){
+            currentObj.setPosition(new Vector3f(picker.getCurrentTerrainPoint().x,0,picker.getCurrentTerrainPoint().z));
         }
     }
 
