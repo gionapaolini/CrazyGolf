@@ -1,6 +1,7 @@
 package terrains;
 
 import models.RawModel;
+import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.opengl.LoadableImageData;
 import renderEngine.Loader;
 import textures.ModelTexture;
@@ -12,12 +13,14 @@ public class Terrain {
 
     public float width = 400;
     public float height = 400;
-    private static final int VERTEX_COUNT = 128;
+    private static final int VERTEX_COUNT = 256;
 
     private float x;
     private float z;
     private RawModel model;
     private ModelTexture texture;
+    private Vector2f putholePosition;
+    private Loader loader;
 
     public Terrain(int gridX, int gridZ, float width, float height,Loader loader, ModelTexture texture){
         this.texture = texture;
@@ -25,6 +28,7 @@ public class Terrain {
         this.height = height;
         this.x = gridX;
         this.z = gridZ;
+        this.loader = loader;
         model = generateTerrain(loader);
     }
 
@@ -56,6 +60,8 @@ public class Terrain {
                 vertexPointer++;
             }
         }
+
+
         int pointer = 0;
         for(int gz=0;gz<VERTEX_COUNT-1;gz++){
             for(int gx=0;gx<VERTEX_COUNT-1;gx++){
@@ -88,5 +94,14 @@ public class Terrain {
 
     public ModelTexture getTexture() {
         return texture;
+    }
+
+    public Vector2f getPutholePosition(){
+        return putholePosition;
+    }
+
+    public void setPutholePosition(Vector2f position){
+        putholePosition = position;
+        model = generateTerrain(loader);
     }
 }
