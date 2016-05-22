@@ -4,7 +4,7 @@ import entities.Entity;
 import models.RawModel;
 import models.TexturedModel;
 import org.lwjgl.util.vector.Vector3f;
-import renderEngine.Loader;cd
+import renderEngine.Loader;
 import renderEngine.OBJLoader;
 import textures.ModelTexture;
 
