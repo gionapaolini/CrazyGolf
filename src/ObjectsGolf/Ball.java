@@ -17,8 +17,8 @@ public class Ball {
     private Entity ball;
 
     public Ball(Loader loader){
-        RawModel model = OBJLoader.loadObjModel("tree",loader);
-        ModelTexture texture = new ModelTexture(loader.loadTexture("tree"));
+        RawModel model = OBJLoader.loadObjModel("pallo",loader);
+        ModelTexture texture = new ModelTexture(loader.loadTexture("white"));
         TexturedModel texturedModel = new TexturedModel(model, texture);
         ball = new Entity(texturedModel, new Vector3f(0,0,0),0,0,0,1);
     }

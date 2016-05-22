@@ -1,6 +1,7 @@
 package CourseCreator;
 
 import ObjectsGolf.Ball;
+import ObjectsGolf.PutHole;
 import entities.Camera;
 import entities.Light;
 import org.lwjgl.opengl.Display;
@@ -28,8 +29,9 @@ public class Loop {
         Terrain terrain = new Terrain(-10,-10,20,20,loader,new ModelTexture(loader.loadTexture("grassy2")));
         MousePicker picker = new MousePicker(camera,renderer.getProjectionMatrix(),terrain);
         Ball ball = new Ball(loader);
-        ControlPanel controlPanel = new ControlPanel(picker,loader,terrain,ball,camera,gui);
-        RenderAll renderAll = new RenderAll(light,camera,gui,ball,controlPanel.getObstaclesList(),terrain);
+        PutHole putHole = new PutHole(loader);
+        ControlPanel controlPanel = new ControlPanel(picker,loader,terrain,ball,putHole,camera,gui);
+        RenderAll renderAll = new RenderAll(light,camera,gui,ball,putHole,controlPanel.getObstaclesList(),terrain);
 
 
         while(!Display.isCloseRequested()){

@@ -17,7 +17,6 @@ public class Camera {
     private float ZLimit = 10;
     private float XLimit = 10;
 
-    public Camera(){}
 
     public void move(){
         if(Keyboard.isKeyDown(Keyboard.KEY_W)){
@@ -35,6 +34,15 @@ public class Camera {
         if(Keyboard.isKeyDown(Keyboard.KEY_A)){
             if(position.x>-XLimit)
                 position.x -= 0.2f;
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_Q)){
+            if(position.y>1)
+                position.y -= 0.2f;
+        }
+        if(Keyboard.isKeyDown(Keyboard.KEY_E)){
+            if(position.y<15)
+                position.y += 0.2f;
         }
 
 
