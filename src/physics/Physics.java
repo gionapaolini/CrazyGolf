@@ -10,8 +10,8 @@ public class Physics {
 
 	private static final Vector3D WORLD_UP = new Vector3D(0, 1 , 0);
 	private static final float GRAVITY = -0.0098f;
-	private static final float ROLL_FRIC = 0.998f;
-	private static float minVelocity = 0.0006f;
+	private static final float ROLL_FRIC = 0.9670f;
+	private static float minVelocity = 0.001f;
 	
 	
 	public static void applyBallPhysics(Ball b, PutHole p,Vector3D normal){
@@ -20,7 +20,7 @@ public class Physics {
 		
 		if(b.isMoving){
 			b.vel = b.vel.mulitply(ROLL_FRIC);
-			b.pos = b.pos.add(b.vel.multiply(b.pos));
+			b.pos = b.pos.add(b.vel);
 			b.move();
 			
 			if((b.vel.absolute().x<=minVelocity 

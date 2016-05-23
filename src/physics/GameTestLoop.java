@@ -32,15 +32,20 @@ public class GameTestLoop {
         Ball ball = new Ball(loader);
         ball.getBall().setPosition(new Vector3f(5,0,0));
         PutHole putHole = new PutHole(loader);
+
+        MousePicker picker = new MousePicker(camera,renderer.getProjectionMatrix(),terrain);
         
         ball.pos = new Vector3D(5,0,0);
         ball.dir = new Vector3D(0,0,0);
-        ball.vel = new Vector3D(-0.0f,0.01f,0.0f);
-        
+        ball.vel = new Vector3D(0,0,0);
+
+        ControlShot shot = new ControlShot(picker,ball);
+
     
 
 
         while(!Display.isCloseRequested()){
+            shot.shot();
         	Physics.applyBallPhysics(ball, putHole,new Vector3D(0,1,0));
         	camera.move();
         	renderer.render(light, camera);
