@@ -22,4 +22,8 @@ public class TexturedModel {
     public ModelTexture getTexture() {
         return texture;
     }
+
+    public void setTexture(ModelTexture t){
+        texture = t;
+    }
 }

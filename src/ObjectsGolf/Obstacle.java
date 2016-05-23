@@ -15,9 +15,9 @@ public class Obstacle {
 
     private Entity obstacle;
 
-    public Obstacle(Loader loader, int n_obstacle){
-        RawModel model = OBJLoader.loadObjModel("tree",loader);
-        ModelTexture texture = new ModelTexture(loader.loadTexture("tree"));
+    public Obstacle(Loader loader, String nameModel, String nameTexture){
+        RawModel model = OBJLoader.loadObjModel(nameModel,loader);
+        ModelTexture texture = new ModelTexture(loader.loadTexture(nameTexture));
         TexturedModel texturedModel = new TexturedModel(model, texture);
         obstacle = new Entity(texturedModel, new Vector3f(0,0,0),0,0,0,1);
     }

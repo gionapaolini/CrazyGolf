@@ -11,6 +11,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import renderEngine.Loader;
 import terrains.Terrain;
+import textures.ModelTexture;
 import toolbox.MousePicker;
 
 import java.util.ArrayList;
@@ -49,6 +50,13 @@ public class ControlPanel {
     private GuiButton obs3Button;
     private GuiButton obs4Button;
 
+    private boolean collide;
+
+    private ModelTexture collisionText;
+
+    private Vector3f previousCoordBall;
+    private Vector3f previousCoordPutHole;
+
 
     public ControlPanel(MousePicker picker, Loader loader, Terrain terrain, Ball ball, PutHole putHole, Camera camera, GuiCourseCreator guiCourseCreator) {
         this.picker = picker;
@@ -66,6 +74,12 @@ public class ControlPanel {
         obs3Button = guiCourseCreator.getObstacle3Button();
         obs4Button = guiCourseCreator.getObstacle4Button();
         currentEntity = null;
+
+        collisionText = new ModelTexture(loader.loadTexture("red"));
+
+
+        ball.getBall().setCollisionTexture(collisionText);
+        putHole.getPutHole().setCollisionTexture(collisionText);
 
     }
 
@@ -175,6 +189,7 @@ public class ControlPanel {
                     obs3Button.deselect();
                     obs1Button.deselect();
                 }else{
+                    fixObject();
                     ballButton.deselect();
                     putHoleButton.deselect();
                     obs1Button.deselect();
@@ -191,24 +206,54 @@ public class ControlPanel {
         }
     }
 
+    private void fixObject(){
+        if(currentEntity!=null && collide){
+            if(ballButton.isSelected()) {
+                ball.getBall().setPosition(previousCoordBall);
+                ball.getBall().setCollideColor(false);
+            }else if(putHoleButton.isSelected()) {
+                putHole.getPutHole().setPosition(previousCoordPutHole);
+                putHole.getPutHole().setCollideColor(false);
+            }else{
+                obstaclesList.remove(obstaclesList.size()-1);
+            }
+        }
+    }
+
     private void checkStateButton(){
 
         if(ballButton.isSelected()){
             attachBallToPointer();
         }else if(putHoleButton.isSelected()){
             attachPutHoleToPointer();
+        }else if(obs1Button.isSelected()){
+            attachNewObsToPointer("tree");
+        }else if(obs2Button.isSelected()){
+
+        }else if(obs3Button.isSelected()){
+
+        }else if(obs4Button.isSelected()){
+
         }else {
             currentEntity = null;
         }
 
     }
 
+    private void attachNewObsToPointer(String name){
+        Obstacle g = new Obstacle(loader,name,"white");
+        currentEntity = g.getObstacle();
+        currentEntity.setCollisionTexture(collisionText);
+        obstaclesList.add(g);
+    }
 
     private void attachBallToPointer(){
+        previousCoordBall = ball.getBall().getPosition();
         currentEntity = ball.getBall();
     }
 
     private void attachPutHoleToPointer(){
+        previousCoordPutHole = putHole.getPutHole().getPosition();
         currentEntity = putHole.getPutHole();
     }
 
@@ -217,8 +262,39 @@ public class ControlPanel {
         if(terrainPoint!=null) {
             if (currentEntity != null) {
                 currentEntity.setPosition(terrainPoint);
+                collide = false;
+                for(Obstacle obs: obstaclesList){
+                    if(obs.getObstacle()!=currentEntity) {
+                        Vector3f originOBS = obs.getObstacle().getPosition();
+                        double distance = Math.sqrt(Math.pow(originOBS.x - terrainPoint.x, 2) +
+                                Math.pow(originOBS.y - terrainPoint.y, 2) + Math.pow(originOBS.z - terrainPoint.z, 2));
+                        if (distance < 1) {
+                            collide = true;
+                            break;
+                        }
+                    }
+                }
+                if(ball.getBall()!=currentEntity) {
+                    Vector3f originBall = ball.getBall().getPosition();
+                    double distance = Math.sqrt(Math.pow(originBall.x - terrainPoint.x, 2) +
+                            Math.pow(originBall.y - terrainPoint.y, 2) + Math.pow(originBall.z - terrainPoint.z, 2));
+                    if (distance < 1)
+                        collide = true;
+                }
+                if(putHole.getPutHole()!=currentEntity){
+                    Vector3f originBall = putHole.getPutHole().getPosition();
+                    double distance = Math.sqrt(Math.pow(originBall.x - terrainPoint.x, 2) +
+                            Math.pow(originBall.y - terrainPoint.y, 2) + Math.pow(originBall.z - terrainPoint.z, 2));
+                    if (distance < 1)
+                        collide = true;
+
+                }
+
+
+                currentEntity.setCollideColor(collide);
             }
         }
+
     }
 
     private void setLimitsTerrainSize(){

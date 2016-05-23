@@ -1,7 +1,10 @@
 package entities;
 
+import models.RawModel;
 import models.TexturedModel;
 import org.lwjgl.util.vector.Vector3f;
+import renderEngine.OBJLoader;
+import textures.ModelTexture;
 
 /**
  * Created by giogio on 13/05/16.
@@ -9,10 +12,12 @@ import org.lwjgl.util.vector.Vector3f;
 public class Entity {
 
     private TexturedModel model;
+    private ModelTexture trueTexture, collisionTexture;
     private Vector3f position;
     private float rotX,rotY,rotZ;
     private float scale;
-    public boolean render, moving;
+    public boolean render;
+
 
     public Entity(TexturedModel model, Vector3f position,
                   float rotX, float rotY, float rotZ, float scale) {
@@ -22,15 +27,24 @@ public class Entity {
         this.rotY = rotY;
         this.rotZ = rotZ;
         this.scale = scale;
+        this.trueTexture = model.getTexture();
         render = true;
-        moving = false;
+    }
+
+    public void setCollisionTexture(ModelTexture collisionTexture) {
+        this.collisionTexture = collisionTexture;
+    }
+
+    public void setCollideColor(boolean x){
+        if(x){
+            model.setTexture(collisionTexture);
+        }else{
+            model.setTexture(trueTexture);
+        }
     }
 
     public void setState(boolean state){
         render = state;
-    }
-    public void setMoving(boolean moving){
-        this.moving = moving;
     }
 
     public void increasePosition(float dx, float dy, float dz){

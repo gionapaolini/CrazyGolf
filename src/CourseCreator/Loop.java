@@ -20,7 +20,6 @@ public class Loop {
     public static void main(String[] args){
 
         DisplayManager.createDisplay();
-
         Loader loader = new Loader();
         Light light = new Light(new Vector3f(0,20,0), new Vector3f(1,1,1));
         Camera camera = new Camera();
