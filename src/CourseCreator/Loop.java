@@ -22,7 +22,7 @@ public class Loop {
         DisplayManager.createDisplay();
 
         Loader loader = new Loader();
-        Light light = new Light(new Vector3f(0,1000,0), new Vector3f(1,1,1));
+        Light light = new Light(new Vector3f(0,20,0), new Vector3f(1,1,1));
         Camera camera = new Camera();
         MasterRenderer renderer = new MasterRenderer();
         GuiCourseCreator gui = new GuiCourseCreator(loader);

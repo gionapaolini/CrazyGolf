@@ -50,11 +50,32 @@ public class Terrain {
         for(int i=0;i<VERTEX_COUNT;i++){
             for(int j=0;j<VERTEX_COUNT;j++){
                 vertices[vertexPointer*3] = (float)j/((float)VERTEX_COUNT - 1) * width;
-                vertices[vertexPointer*3+1] = 0;
+                if(i == 0 || j==0 || i==VERTEX_COUNT-1 || j == VERTEX_COUNT-1)
+                    vertices[vertexPointer*3+1] = 3;
+                else
+                    vertices[vertexPointer*3+1] = 0;
                 vertices[vertexPointer*3+2] = (float)i/((float)VERTEX_COUNT - 1) * height;
-                normals[vertexPointer*3] = 0;
-                normals[vertexPointer*3+1] = 1;
-                normals[vertexPointer*3+2] = 0;
+                if(i==0){
+                    normals[vertexPointer*3] = 0;
+                    normals[vertexPointer*3+1] = 0;
+                    normals[vertexPointer*3+2] = 1;
+                }else if(j==0) {
+                    normals[vertexPointer * 3] = 1;
+                    normals[vertexPointer * 3 + 1] = 0;
+                    normals[vertexPointer * 3 + 2] = 0;
+                }else if(i==VERTEX_COUNT-1) {
+                    normals[vertexPointer * 3] = 0;
+                    normals[vertexPointer * 3 + 1] = 0;
+                    normals[vertexPointer * 3 + 2] = -1;
+                }else if(j==VERTEX_COUNT-1) {
+                    normals[vertexPointer * 3] = -1;
+                    normals[vertexPointer * 3 + 1] = 0;
+                    normals[vertexPointer * 3 + 2] = 0;
+                }else{
+                    normals[vertexPointer * 3] = 0;
+                    normals[vertexPointer * 3 + 1] = 1;
+                    normals[vertexPointer * 3 + 2] = 0;
+                }
                 textureCoords[vertexPointer*2] = (float)j/((float)VERTEX_COUNT - 1);
                 textureCoords[vertexPointer*2+1] = (float)i/((float)VERTEX_COUNT - 1);
                 vertexPointer++;
