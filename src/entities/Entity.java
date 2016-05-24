@@ -80,7 +80,7 @@ public class Entity {
     }
 
     public void setRotX(float rotX) {
-        this.rotX = rotX;
+        this.rotX = rotX%360;
     }
 
     public float getRotY() {
@@ -88,7 +88,7 @@ public class Entity {
     }
 
     public void setRotY(float rotY) {
-        this.rotY = rotY;
+        this.rotY = rotY%360;
     }
 
     public float getRotZ() {
@@ -96,7 +96,7 @@ public class Entity {
     }
 
     public void setRotZ(float rotZ) {
-        this.rotZ = rotZ;
+        this.rotZ = rotZ%360;
     }
 
     public float getScale() {

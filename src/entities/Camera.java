@@ -3,7 +3,9 @@ package entities;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
+import toolbox.Maths;
 
 
 /**
@@ -16,6 +18,9 @@ public class Camera {
     private float roll;
     private float ZLimit = 10;
     private float XLimit = 10;
+
+    public Camera(){
+    }
 
 
     public void move(){
@@ -46,16 +51,22 @@ public class Camera {
         }
 
 
-        if(Mouse.isButtonDown(1)){
-            float pitchChange = Mouse.getDY() * 0.1f;
-            pitch += pitchChange;
-            pitch%=360;
-        }
+        if (Mouse.isButtonDown(1)){
+            Matrix4f matrix = Maths.createViewMatrix(this);
+            System.out.println();
+            System.out.println();
+            System.out.println(matrix.m00 + "    " + matrix.m01 + "    " + matrix.m02 + "    " + matrix.m03);
+            System.out.println(matrix.m10 + "    " + matrix.m11 + "    " + matrix.m12 + "    " + matrix.m13);
+            System.out.println(matrix.m20 + "    " + matrix.m21 + "    " + matrix.m22 + "    " + matrix.m23);
+            System.out.println(matrix.m30 + "    " + matrix.m31 + "    " + matrix.m32 + "    " + matrix.m33);
 
-        if (Mouse.isButtonDown(0)){
+
             float angleChange = Mouse.getDX() * 0.1f;
             yaw -= angleChange;
             yaw%=360;
+            float pitchChange = Mouse.getDY() * 0.1f;
+            pitch += pitchChange;
+            pitch%=360;
         }
 
 

@@ -35,6 +35,7 @@ public class ControlPanel {
     //****
 
     private boolean widthMode = false;
+    private boolean rotationMode = false;
     private long timeTerrainSize;
     private long timeClickGui;
 
@@ -86,7 +87,9 @@ public class ControlPanel {
     public void checkUpdates(){
         picker.update();
         moveCamera();
-        changeSizeTerrain();
+        if(currentEntity==null) {
+            changeSizeTerrain();
+        }
         checkButtonClicks();
         moveAround();
     }
@@ -229,11 +232,11 @@ public class ControlPanel {
         }else if(obs1Button.isSelected()){
             attachNewObsToPointer("tree");
         }else if(obs2Button.isSelected()){
-
+            attachNewObsToPointer("cubone");
         }else if(obs3Button.isSelected()){
-
+            attachNewObsToPointer("provona");
         }else if(obs4Button.isSelected()){
-
+            attachNewObsToPointer("slope");
         }else {
             currentEntity = null;
         }
@@ -259,8 +262,10 @@ public class ControlPanel {
 
     private void moveAround(){
         Vector3f terrainPoint = picker.getCurrentTerrainPoint();
+
         if(terrainPoint!=null) {
             if (currentEntity != null) {
+                changeSizeAndRotation();
                 currentEntity.setPosition(terrainPoint);
                 collide = false;
                 for(Obstacle obs: obstaclesList){
@@ -295,6 +300,37 @@ public class ControlPanel {
             }
         }
 
+    }
+
+    private void changeSizeAndRotation(){
+
+        long current_time = System.currentTimeMillis();
+
+        if((current_time - timeTerrainSize)>250) {
+            if (Keyboard.isKeyDown(Keyboard.KEY_DIVIDE)) {
+                rotationMode = !rotationMode;
+                timeTerrainSize = System.currentTimeMillis();
+            }
+
+
+        }
+
+        if(ball.getBall()!=currentEntity && putHole.getPutHole()!=currentEntity) {
+            int scale = Mouse.getDWheel();
+            if (scale > 0) {
+                if(rotationMode){
+                    currentEntity.setRotY(currentEntity.getRotY()+4);
+                }else {
+                    currentEntity.setScale((float) (currentEntity.getScale() + 0.2));
+                }
+            } else if (scale < 0) {
+                if(rotationMode){
+                    currentEntity.setRotY(currentEntity.getRotY()-4);
+                }else {
+                    currentEntity.setScale((float) (currentEntity.getScale() - 0.2));
+                }
+            }
+        }
     }
 
     private void setLimitsTerrainSize(){
