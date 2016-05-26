@@ -49,5 +49,10 @@ public class Ball {
     	pos =v;
     	move();
     }
+    
+    public void setDir(Vector3D v){
+    	dir = v;
+    	dir.normalize();
+    }
 
 }

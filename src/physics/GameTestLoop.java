@@ -39,23 +39,23 @@ public class GameTestLoop {
 
         MousePicker picker = new MousePicker(camera,renderer.getProjectionMatrix(),terrain);
         
-        ball1.setPos( new Vector3D(1,0,5));
-        ball1.dir = new Vector3D(0,0,0);
-        ball1.vel = new Vector3D(0,0,0);
+        ball1.setPos( new Vector3D(1,0,0));
+        ball1.setDir( new Vector3D(1,1,1));
+        ball1.vel = new Vector3D(-0.1f,0,0.1f);
         
-        ball2.setPos( new Vector3D(-4,0,-4));
-        ball2.dir = new Vector3D(0,0,0);
+        ball2.setPos( new Vector3D(1,0,0));
+        ball2.setDir( new Vector3D(1,1,1));
         ball2.vel = new Vector3D(0,0,0);
+        
 
 
         ControlShot shot = new ControlShot(picker,ball1, putHole);
-        //Player player1 = new HumanPlayer(ball1, putHole, picker);
-        Player player1 = new AiPlayer(ball1, putHole);
+        Player player1 = new HumanPlayer(ball1, putHole, picker);
+        //Player player1 = new AiPlayer(ball1, putHole);
         //Player player2 = new HumanPlayer(ball2, putHole, picker);
         Player player2 = new AiPlayer(ball2, putHole);
         //byte turn = 1;
-    
-
+        int i = 0;
 
         while(!Display.isCloseRequested()){
             //shot.shot();
@@ -63,6 +63,7 @@ public class GameTestLoop {
         	playerLogic(player1, player2);
         	Physics.applyBallPhysics(ball1, putHole,new Vector3D(0,1,0));
         	Physics.applyBallPhysics(ball2, putHole,new Vector3D(0,1,0));
+        	
         	camera.move();
         	renderer.render(light, camera);
         	renderer.processEntity(ball1.getBall());
@@ -70,7 +71,11 @@ public class GameTestLoop {
         	renderer.processEntity(putHole.getPutHole());
         	renderer.processTerrain(terrain);
             DisplayManager.updateDisplay();
-
+            if (i==20)
+            	Physics.reflect(ball1, new Vector3D(1,0,0));
+            if(i == 30)
+            	Physics.reflect(ball1, new Vector3D(0,0,1));
+            i++;
         }
         renderer.cleanUp();
         loader.cleanUp();

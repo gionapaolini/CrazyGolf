@@ -20,7 +20,7 @@ public class Physics {
 		
 		if(b.isMoving){
 			b.vel = b.vel.mulitply(ROLL_FRIC);
-			b.pos = b.pos.add(b.vel);
+			b.pos = b.pos.add(b.vel.multiply(b.dir));
 			b.move();
 			
 			if((b.vel.absolute().x<=minVelocity 
@@ -54,11 +54,10 @@ public class Physics {
 		return false;
 	}
 	
-	public void reflect(Ball b, Vector3D normal){
-		Vector3D bounce = new Vector3D(b.dir.x, 0, b.dir.z);
-		bounce = normal.mulitply(2).mulitply(b.dir.dot(normal)).subtract(b.dir).mulitply(-1);
-		b.dir.x =bounce.x;
-		b.dir.z= bounce.z;
+	public static void reflect(Ball b, Vector3D normal){
+		Vector3D bounce = new Vector3D(b.dir.x, b.dir.y, b.dir.z);
+		bounce = normal.mulitply(-2*b.dir.dot(normal)).add(b.dir);
+		b.setDir(bounce);
 	}
 	
 	public static void calcSlope(Ball b, Vector3D normal){
