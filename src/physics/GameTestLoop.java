@@ -10,6 +10,9 @@ import ObjectsGolf.Ball;
 import ObjectsGolf.PutHole;
 import entities.Camera;
 import entities.Light;
+import player.AiPlayer;
+import player.HumanPlayer;
+import player.Player;
 import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
@@ -29,27 +32,41 @@ public class GameTestLoop {
         MasterRenderer renderer = new MasterRenderer();
         
         Terrain terrain = new Terrain(-10,-10,20,20,loader,new ModelTexture(loader.loadTexture("grassy2")));
-        Ball ball = new Ball(loader);
-        ball.getBall().setPosition(new Vector3f(5,0,0));
+        Ball ball1 = new Ball(loader);
+        Ball ball2 = new Ball(loader);
+        //ball.getBall().setPosition(new Vector3f(4,0,5));
         PutHole putHole = new PutHole(loader);
 
         MousePicker picker = new MousePicker(camera,renderer.getProjectionMatrix(),terrain);
         
-        ball.pos = new Vector3D(5,0,0);
-        ball.dir = new Vector3D(0,0,0);
-        ball.vel = new Vector3D(0,0,0);
+        ball1.setPos( new Vector3D(1,0,5));
+        ball1.dir = new Vector3D(0,0,0);
+        ball1.vel = new Vector3D(0,0,0);
+        
+        ball2.setPos( new Vector3D(-4,0,-4));
+        ball2.dir = new Vector3D(0,0,0);
+        ball2.vel = new Vector3D(0,0,0);
 
-        ControlShot shot = new ControlShot(picker,ball);
 
+        ControlShot shot = new ControlShot(picker,ball1, putHole);
+        //Player player1 = new HumanPlayer(ball1, putHole, picker);
+        Player player1 = new AiPlayer(ball1, putHole);
+        //Player player2 = new HumanPlayer(ball2, putHole, picker);
+        Player player2 = new AiPlayer(ball2, putHole);
+        //byte turn = 1;
     
 
 
         while(!Display.isCloseRequested()){
-            shot.shot();
-        	Physics.applyBallPhysics(ball, putHole,new Vector3D(0,1,0));
+            //shot.shot();
+            //shot.aiShot(1);
+        	playerLogic(player1, player2);
+        	Physics.applyBallPhysics(ball1, putHole,new Vector3D(0,1,0));
+        	Physics.applyBallPhysics(ball2, putHole,new Vector3D(0,1,0));
         	camera.move();
         	renderer.render(light, camera);
-        	renderer.processEntity(ball.getBall());
+        	renderer.processEntity(ball1.getBall());
+        	renderer.processEntity(ball2.getBall());
         	renderer.processEntity(putHole.getPutHole());
         	renderer.processTerrain(terrain);
             DisplayManager.updateDisplay();
@@ -59,5 +76,14 @@ public class GameTestLoop {
         loader.cleanUp();
         DisplayManager.closeDisplay();
 
+	}
+	
+	public static void playerLogic(Player p1, Player p2){
+		if(!p1.ball.isMoving && !p2.ball.isMoving){
+			if(p1.getStrokes() == p2.getStrokes())
+				p1.shot();
+			else
+				p2.shot();
+		}
 	}
 }

@@ -44,5 +44,10 @@ public class Ball {
     public Entity getBall(){
         return ball;
     }
+    
+    public void setPos(Vector3D v){
+    	pos =v;
+    	move();
+    }
 
 }
